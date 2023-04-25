@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="concert">
+<mapper namespace="hashtag">
 	
 	
-	<insert id="create" parameterType="hashtagVO">
-		insert into concert values (null, #{title}, #{genre}, #{place})
+	<insert id="create" parameterType="String">
+		insert into hashtag values (null, #{keyword}, 1)
 	</insert>
 	
-	<delete id="del"  parameterType="int">
-		delete from concert where no = #{no}
-	</delete>
-	
 	<update id="up"  parameterType="hashtagVO">
-		update concert set place = #{place} where no = #{no}
+		update hashtag set count = #{count} where keyword = #{keyword}
 	</update>
 	
-	<select id = "one" parameterType="int" resultType="hashtagVO">
-		select * from concert where no = #{no}
+	<select id = "one" parameterType="String" resultType="hashtagVO">
+		select * from hashtag where keyword = #{keyword}
 	</select>
 	
 	<select id = "all" resultType="hashtagVO">
-		select * from concert
+		select * from hashtag order by count desc limit 5
 	</select>
-	
 </mapper>

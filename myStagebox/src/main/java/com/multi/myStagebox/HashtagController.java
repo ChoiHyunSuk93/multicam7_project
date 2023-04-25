@@ -24,25 +24,16 @@ public class HashtagController {
 	// 요청된 주소가 어떻게 될 때
 	// 바로 아래에 있는 메서드가 호출이 될지를
 	// 써주어야 한다.
-	@RequestMapping("insert")
-	public void insert(HashtagVO bag) {
-		dao.insert(bag);
-	}
-
-	@RequestMapping("update")
-	public void update(HashtagVO bag) {
-		dao.update(bag);
-	}
-
-	@RequestMapping("delete")
-	public void delete(int no) {
-		dao.delete(no);
-	}
-
-	@RequestMapping("one")
-	public void one2(int no, Model model) {
-		HashtagVO bag = dao.one(no);
-		model.addAttribute("bag", bag);
+	
+	@RequestMapping("saveHashtag")
+	public void saveHashtag(String keyword) {
+		HashtagVO hashtagVO = dao.one(keyword);
+		if (hashtagVO == null) {
+			dao.insert(keyword);
+		} else {
+			hashtagVO.setCount(hashtagVO.getCount() + 1);
+			dao.update(hashtagVO);
+		}
 	}
 	
 	@RequestMapping("list")
